@@ -32,3 +32,9 @@ function autoload($className)
 }
 //reggister the default autoload function
 spl_autoload_register("autoload");
+
+$db = new Database();
+//global connection
+$conn = $db->conn;
+
+Router::run();
