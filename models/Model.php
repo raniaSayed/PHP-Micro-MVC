@@ -20,17 +20,13 @@ class Model
 
 		foreach ($colsNames as $key => $value) {
 			$keys[] = $key;
-			if($value!=NULL)
-				$values[] = "'".$value."'";
-			else
-				$values[] = 'NULL';
+			$values[] = "'".$$key."'";
 		}
 
 		$query = sprintf(
                       "insert into ".$this->tableName." (%s) values (%s);"
                       ,implode(',',$keys),implode(',',$values)
                     );
-
 
 		echo "query : ".$query."<br>";
 
