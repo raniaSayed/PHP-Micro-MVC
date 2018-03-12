@@ -10,44 +10,42 @@ class Model
   protected $colsNames;
 
   /**
-	*	dynamic insert can be used by any table
-	*	@param $variableList is a variable list of any size ex(x1,x2,x3,...)
+	*	dynamic insert can be used by any Model
 	**/
 	public function insert(){
     //get db connection
     global $conn;
 
-
-		foreach ($colsNames as $key => $value) {
-			$keys[] = $key;
-			$values[] = "'".$$key."'";
+    //prepare model coloumn names and it's values
+		foreach ($this->colsNames as  $value) {
+			$keys[] = $value;
+			$values[] = "'".$this->$value."'";
 		}
+
 
 		$query = sprintf(
                       "insert into ".$this->tableName." (%s) values (%s);"
                       ,implode(',',$keys),implode(',',$values)
                     );
 
-		echo "query : ".$query."<br>";
-
-		if(! $result_set = $this->prepareStmt($query)){
-			echo $this->conn->connect_error;
-					echo " msh tmam";
-
-			return false;
-		}
+		// if(! $result_set = $this->prepareStmt($query)){
+		// 	echo $conn->connect_error;
+		// 	return false;
+		// }
 		//$stmt->close();
+    $this->prepareStmt($query);
 		return true;
 	}
 
   public function prepareStmt($query){
-      if(! $stmt = $this->conn->prepare($query) ){
-          echo "Prepare failed: (" . $this->conn->errno . ") " . $this->conn->error;
+    global $conn;
+      if(! $stmt = $conn->prepare($query) ){
+          echo "Prepare failed: (" . $conn->errno . ") " . $conn->error;
         return false;
       }
       $id=NULL;
       if(! $stmt->execute()){
-          echo "Prepare failed: (" . $this->conn->errno . ") " . $this->conn->error;
+          echo "Prepare failed: (" . $conn->errno . ") " . $conn->error;
       }
       $result = $stmt->get_result();
 

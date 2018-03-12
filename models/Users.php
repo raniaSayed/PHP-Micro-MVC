@@ -7,8 +7,10 @@
 class Users extends Model
 {
 
-  function __construct(argument)
-  {
-    # code...
-  }
+  public $id;
+  public $name;
+  public $email;
+  protected $tableName ="users";
+  protected $colsNames =["id","name","email"];
+
 }

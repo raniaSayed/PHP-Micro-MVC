@@ -28,7 +28,7 @@ set_include_path($path.PS.CONTROLLERS_DIR.PS.MODELS_DIR.PS.LIBS_DIR);
 function autoload($className)
 {
   //capitalize first letter of class name
-  require(ucwords($className."php"));
+  require(ucwords($className.".php"));
 }
 //reggister the default autoload function
 spl_autoload_register("autoload");
@@ -37,4 +37,4 @@ $db = new Database();
 //global connection
 $conn = $db->conn;
 
-Router::run();
+//Router::run();
